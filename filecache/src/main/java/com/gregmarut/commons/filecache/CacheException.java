@@ -10,7 +10,7 @@
  *     Greg Marut - initial API and implementation
  * </pre>
  ******************************************************************************/
-package com.gregmarut.android.commons.filecache;
+package com.gregmarut.commons.filecache;
 
 public class CacheException extends Exception
 {
