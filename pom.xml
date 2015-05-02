@@ -7,4 +7,7 @@
 	<packaging>pom</packaging>
 	<name>commons</name>
 	<description>A collection of commonly used code</description>
+	<modules>
+		<module>encryption</module>
+	</modules>
 </project>
