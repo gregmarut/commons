@@ -12,8 +12,6 @@
  ******************************************************************************/
 package com.gregmarut.commons.filecache;
 
-import java.io.IOException;
-
 public interface FileCache
 {
 	/**
@@ -30,7 +28,7 @@ public interface FileCache
 	 * @return
 	 * @throws CacheException
 	 */
-	byte[] load(final String relativePath) throws IOException;
+	byte[] load(final String relativePath) throws CacheException;
 	
 	/**
 	 * Saves the content to the file specified at the relative path

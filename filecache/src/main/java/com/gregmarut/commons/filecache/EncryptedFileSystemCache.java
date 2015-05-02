@@ -13,7 +13,6 @@
 package com.gregmarut.commons.filecache;
 
 import java.io.File;
-import java.io.IOException;
 
 import com.gregmarut.commons.encryption.AESEncryption;
 import com.gregmarut.commons.encryption.Encryption;
@@ -62,7 +61,7 @@ public class EncryptedFileSystemCache extends FileSystemCache
 				return null;
 			}
 		}
-		catch (IOException e)
+		catch (CacheException e)
 		{
 			return null;
 		}

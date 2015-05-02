@@ -45,29 +45,37 @@ public class FileSystemCache implements FileCache
 	}
 	
 	@Override
-	public byte[] load(final String relativePath) throws IOException
+	public byte[] load(final String relativePath) throws CacheException
 	{
-		// retrieve the file for this path
-		File file = getFile(relativePath);
-		
-		// load the data from the file
-		return IOUtils.toByteArray(new FileInputStream(file));
+		try
+		{
+			// retrieve the file for this path
+			File file = getFile(relativePath);
+			
+			// load the data from the file
+			return IOUtils.toByteArray(new FileInputStream(file));
+		}
+		catch (IOException e)
+		{
+			// wrap the exception
+			throw new CacheException(e);
+		}
 	}
 	
 	@Override
 	public void save(final String relativePath, final byte[] data) throws CacheException
 	{
-		// retrieve the file for this path
-		File file = getFile(relativePath);
-		
-		// make the necessary directories if needed
-		file.getParentFile().mkdirs();
-		
 		// holds the output stream to write to
 		FileOutputStream out = null;
 		
 		try
 		{
+			// retrieve the file for this path
+			File file = getFile(relativePath);
+			
+			// make the necessary directories if needed
+			file.getParentFile().mkdirs();
+			
 			// write the data to the file
 			out = new FileOutputStream(file);
 			out.write(data);
@@ -97,19 +105,33 @@ public class FileSystemCache implements FileCache
 	@Override
 	public boolean exists(String relativePath)
 	{
-		// retrieve the file for this path
-		File file = getFile(relativePath);
-		return file.exists();
+		try
+		{
+			// retrieve the file for this path
+			File file = getFile(relativePath);
+			return file.exists();
+		}
+		catch (IOException e)
+		{
+			return false;
+		}
 	}
 	
 	@Override
 	public void delete(final String relativePath)
 	{
-		// retrieve the file for this path
-		File file = getFile(relativePath);
-		
-		// delete the file/folder and all of its contents
-		recursiveDelete(file);
+		try
+		{
+			// retrieve the file for this path
+			File file = getFile(relativePath);
+			
+			// delete the file/folder and all of its contents
+			recursiveDelete(file);
+		}
+		catch (IOException e)
+		{
+			// ignore
+		}
 	}
 	
 	@Override
@@ -156,7 +178,7 @@ public class FileSystemCache implements FileCache
 		}
 	}
 	
-	private File getFile(final String relativePath)
+	private File getFile(final String relativePath) throws IOException
 	{
 		StringBuilder sb = new StringBuilder();
 		sb.append(root.getAbsolutePath());
@@ -170,7 +192,17 @@ public class FileSystemCache implements FileCache
 		// append the relative path
 		sb.append(relativePath);
 		
-		return new File(sb.toString());
+		File file = new File(sb.toString());
+		
+		// for security reasons, make sure that this path is not above the root
+		if (file.getCanonicalPath().contains(root.getCanonicalPath()))
+		{
+			return new File(sb.toString());
+		}
+		else
+		{
+			throw new IllegalFileException("relativePath is outside of the root directory");
+		}
 	}
 	
 	public File getRoot()
