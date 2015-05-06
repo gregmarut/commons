@@ -19,6 +19,9 @@ import java.util.Arrays;
  */
 public class ByteArray
 {
+	public static final byte TRUE = 1;
+	public static final byte FALSE = 0;
+	
 	// holds the array of bytes
 	protected byte[] bytes;
 	
@@ -63,7 +66,10 @@ public class ByteArray
 	 */
 	public void append(byte b)
 	{
-		append(new byte[] { b });
+		append(new byte[]
+		{
+			b
+		});
 	}
 	
 	/**
@@ -88,7 +94,7 @@ public class ByteArray
 	public void append(boolean bool)
 	{
 		// determine the byte to append
-		byte b = (bool ? (byte) 1 : (byte) 0);
+		byte b = (bool ? TRUE : FALSE);
 		
 		// append the byte
 		append(b);
