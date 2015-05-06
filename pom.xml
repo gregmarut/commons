@@ -12,6 +12,7 @@
 		<module>encryption</module>
 		<module>filecache</module>
 		<module>android</module>
+		<module>util</module>
 	</modules>
 
 	<properties>

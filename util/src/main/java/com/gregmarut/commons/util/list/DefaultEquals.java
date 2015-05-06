@@ -10,14 +10,19 @@
  *     Greg Marut - initial API and implementation
  * </pre>
  ******************************************************************************/
-package com.gregmarut.commons.filecache;
+package com.gregmarut.commons.util.list;
 
-public class IllegalFileException extends RuntimeException
+/**
+ * Represents the default java equals method
+ * 
+ * @author greg
+ * @param <T>
+ */
+public class DefaultEquals<T> implements Equals<T>
 {
-	private static final long serialVersionUID = 1L;
-	
-	public IllegalFileException(final String message)
+	@Override
+	public boolean equals(T obj1, T obj2)
 	{
-		super(message);
+		return obj1.equals(obj2);
 	}
 }

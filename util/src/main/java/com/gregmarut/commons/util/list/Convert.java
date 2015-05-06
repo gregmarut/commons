@@ -10,14 +10,16 @@
  *     Greg Marut - initial API and implementation
  * </pre>
  ******************************************************************************/
-package com.gregmarut.commons.filecache;
+package com.gregmarut.commons.util.list;
 
-public class IllegalFileException extends RuntimeException
+/**
+ * Represents a template for how to convert one object to another
+ * 
+ * @author Greg Marut
+ * @param <S>
+ * @param <T>
+ */
+public interface Convert<S, T>
 {
-	private static final long serialVersionUID = 1L;
-	
-	public IllegalFileException(final String message)
-	{
-		super(message);
-	}
+	T convert(S source);
 }

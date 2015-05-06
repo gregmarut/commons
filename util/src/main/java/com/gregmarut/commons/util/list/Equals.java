@@ -10,14 +10,15 @@
  *     Greg Marut - initial API and implementation
  * </pre>
  ******************************************************************************/
-package com.gregmarut.commons.filecache;
+package com.gregmarut.commons.util.list;
 
-public class IllegalFileException extends RuntimeException
+/**
+ * Represents a template for comparing two objects to determine if they are equal
+ * 
+ * @author Greg Marut
+ * @param <T>
+ */
+public interface Equals<T>
 {
-	private static final long serialVersionUID = 1L;
-	
-	public IllegalFileException(final String message)
-	{
-		super(message);
-	}
+	public boolean equals(final T obj1, final T obj2);
 }
