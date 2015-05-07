@@ -8,6 +8,7 @@
 	</parent>
 	<artifactId>filecache</artifactId>
 	<name>filecache</name>
+	<url>https://github.com/gregmarut/commons/</url>
 
 	<licenses>
 		<license>

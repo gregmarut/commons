@@ -8,6 +8,7 @@
 	</parent>
 	<artifactId>util</artifactId>
 	<name>util</name>
+	<url>https://github.com/gregmarut/commons/</url>
 
 	<licenses>
 		<license>
