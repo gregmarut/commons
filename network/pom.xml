@@ -6,6 +6,18 @@
 		<artifactId>commons</artifactId>
 		<version>1.0-SNAPSHOT</version>
 	</parent>
-	<artifactId>util</artifactId>
-	<name>util</name>
+	<artifactId>network</artifactId>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.gregmarut.commons</groupId>
+			<artifactId>util</artifactId>
+			<version>${version.this}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.gregmarut.commons</groupId>
+			<artifactId>encryption</artifactId>
+			<version>${version.this}</version>
+		</dependency>
+	</dependencies>
 </project>

@@ -13,16 +13,31 @@
 		<module>filecache</module>
 		<module>android</module>
 		<module>util</module>
+		<module>network</module>
 	</modules>
 
 	<properties>
 		<version.this>1.0-SNAPSHOT</version.this>
 
+		<version.slf4j>1.7.7</version.slf4j>
 		<version.junit>4.4</version.junit>
 		<version.commons-io>2.4</version.commons-io>
 	</properties>
 
 	<dependencies>
+		<!-- Logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${version.slf4j}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${version.slf4j}</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- JUnit / Testing -->
 		<dependency>
 			<groupId>junit</groupId>
