@@ -14,7 +14,6 @@ package com.gregmarut.commons.filecache;
 
 import java.io.File;
 
-import com.gregmarut.commons.encryption.AESEncryption;
 import com.gregmarut.commons.encryption.Encryption;
 import com.gregmarut.commons.encryption.EncryptionException;
 
@@ -23,16 +22,11 @@ public class EncryptedFileSystemCache extends FileSystemCache
 	// holds the encryption object
 	private Encryption encryption;
 	
-	public EncryptedFileSystemCache(final File root, final String encryptionKey) throws EncryptionException
-	{
-		this(root, encryptionKey.getBytes());
-	}
-	
-	public EncryptedFileSystemCache(final File root, final byte[] encryptionKey) throws EncryptionException
+	public EncryptedFileSystemCache(final File root, final Encryption encryption) throws EncryptionException
 	{
 		super(root);
 		
-		encryption = new AESEncryption(encryptionKey);
+		this.encryption = encryption;
 	}
 	
 	@Override

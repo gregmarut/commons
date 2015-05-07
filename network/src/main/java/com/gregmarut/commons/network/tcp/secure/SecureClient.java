@@ -11,7 +11,6 @@ package com.gregmarut.commons.network.tcp.secure;
 
 import java.io.IOException;
 
-import com.gregmarut.commons.encryption.AESEncryption;
 import com.gregmarut.commons.encryption.Encryption;
 import com.gregmarut.commons.encryption.EncryptionException;
 import com.gregmarut.commons.network.tcp.Client;
@@ -41,23 +40,9 @@ public abstract class SecureClient<S> extends Client<S>
 	 * @param encryptionKey
 	 * @throws EncryptionException
 	 */
-	public SecureClient(final String encryptionKey)
-		throws EncryptionException
+	public SecureClient(final Encryption encryption) throws EncryptionException
 	{
-		this(encryptionKey.getBytes());
-	}
-	
-	/**
-	 * The constructor for SecureClient
-	 * 
-	 * @param host
-	 * @param port
-	 * @param encryptionKey
-	 * @throws EncryptionException
-	 */
-	public SecureClient(final byte[] encryptionKey) throws EncryptionException
-	{
-		encryption = new AESEncryption(encryptionKey);
+		this.encryption = encryption;
 	}
 	
 	/**

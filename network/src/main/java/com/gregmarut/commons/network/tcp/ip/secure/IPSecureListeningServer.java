@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.gregmarut.commons.encryption.Encryption;
 import com.gregmarut.commons.encryption.EncryptionException;
 import com.gregmarut.commons.network.tcp.GenericServerSocket;
 import com.gregmarut.commons.network.tcp.GenericSocket;
@@ -37,21 +38,9 @@ public class IPSecureListeningServer extends SecureListeningServer<ServerSocket,
 	 * @param encryptionKey
 	 * @throws EncryptionException
 	 */
-	public IPSecureListeningServer(final int port, final String encryptionKey) throws EncryptionException
+	public IPSecureListeningServer(final int port, final Encryption encryption) throws EncryptionException
 	{
-		this(port, encryptionKey.getBytes());
-	}
-	
-	/**
-	 * The constructor for Server
-	 * 
-	 * @param port
-	 * @param encryptionKey
-	 * @throws EncryptionException
-	 */
-	public IPSecureListeningServer(final int port, final byte[] encryptionKey) throws EncryptionException
-	{
-		super(encryptionKey);
+		super(encryption);
 		
 		// save the port
 		this.port = port;

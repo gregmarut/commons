@@ -11,6 +11,7 @@ package com.gregmarut.commons.network.tcp.ip.secure;
 
 import java.net.Socket;
 
+import com.gregmarut.commons.encryption.Encryption;
 import com.gregmarut.commons.encryption.EncryptionException;
 import com.gregmarut.commons.network.tcp.GenericSocket;
 import com.gregmarut.commons.network.tcp.ip.IPSocket;
@@ -36,22 +37,9 @@ public class IPSecureClient extends SecureClient<Socket>
 	 * @param encryptionKey
 	 * @throws EncryptionException
 	 */
-	public IPSecureClient(final String host, final int port, final String encryptionKey) throws EncryptionException
+	public IPSecureClient(final String host, final int port, final Encryption encryption) throws EncryptionException
 	{
-		this(host, port, 0, encryptionKey.getBytes());
-	}
-	
-	/**
-	 * The constructor for TCPClient
-	 * 
-	 * @param host
-	 * @param port
-	 * @param encryptionKey
-	 * @throws EncryptionException
-	 */
-	public IPSecureClient(final String host, final int port, final byte[] encryptionKey) throws EncryptionException
-	{
-		this(host, port, 0, encryptionKey);
+		this(host, port, 0, encryption);
 	}
 	
 	/**
@@ -61,10 +49,10 @@ public class IPSecureClient extends SecureClient<Socket>
 	 * @param port
 	 * @throws EncryptionException
 	 */
-	public IPSecureClient(final String host, final int port, final int inactivityTimeout, final byte[] encryptionKey)
+	public IPSecureClient(final String host, final int port, final int inactivityTimeout, final Encryption encryption)
 		throws EncryptionException
 	{
-		super(encryptionKey);
+		super(encryption);
 		
 		// save the parameters
 		this.host = host;

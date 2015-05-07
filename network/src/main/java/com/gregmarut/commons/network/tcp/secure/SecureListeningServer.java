@@ -11,7 +11,6 @@ package com.gregmarut.commons.network.tcp.secure;
 
 import java.util.ArrayList;
 
-import com.gregmarut.commons.encryption.AESEncryption;
 import com.gregmarut.commons.encryption.Encryption;
 import com.gregmarut.commons.encryption.EncryptionException;
 import com.gregmarut.commons.network.tcp.ConnectedServer;
@@ -41,24 +40,12 @@ public abstract class SecureListeningServer<L, S> extends ListeningServer<L, S>
 	 * The constructor for SecureListeningServer
 	 * 
 	 * @param port
-	 * @param encryptionKey
-	 * @throws EncryptionException
-	 */
-	public SecureListeningServer(final String encryptionKey) throws EncryptionException
-	{
-		this(encryptionKey.getBytes());
-	}
-	
-	/**
-	 * The constructor for SecureListeningServer
-	 * 
-	 * @param port
 	 * @param strEncryptionKey
 	 * @throws EncryptionException
 	 */
-	public SecureListeningServer(final byte[] encryptionKey) throws EncryptionException
+	public SecureListeningServer(final Encryption encryption) throws EncryptionException
 	{
-		encryption = new AESEncryption(encryptionKey);
+		this.encryption = encryption;
 	}
 	
 	/**

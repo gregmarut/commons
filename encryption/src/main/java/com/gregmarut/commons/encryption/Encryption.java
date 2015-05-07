@@ -21,6 +21,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.gregmarut.commons.util.ByteArray;
+
 public class Encryption
 {
 	// holds the objects to encrypt and decrypt
@@ -146,31 +148,7 @@ public class Encryption
 	 */
 	protected String toHexString(final byte[] bytes)
 	{
-		// holds the string builder that will build the hex string
-		StringBuilder sb = new StringBuilder();
-		
-		// for every byte
-		for (int i = 0; i < bytes.length; i++)
-		{
-			// get the current byte
-			int intCurrent = bytes[i] & 0xFF;
-			
-			// check to see if a leading 0 is needed
-			if (intCurrent < 0x10)
-			{
-				// append a 0
-				sb.append(0);
-			}
-			
-			// convert this int to a string
-			String s = Integer.toHexString(intCurrent).toUpperCase();
-			
-			// append the character
-			sb.append(s);
-		}
-		
-		// return the string
-		return sb.toString();
+		return new ByteArray(bytes).toHexString();
 	}
 	
 	/**
