@@ -7,6 +7,7 @@
 	<packaging>pom</packaging>
 	<name>commons</name>
 	<description>A collection of commonly used code</description>
+	<url>https://github.com/gregmarut/commons/</url>
 
 	<licenses>
 		<license>
