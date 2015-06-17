@@ -14,6 +14,8 @@ package com.gregmarut.android.commons.weak;
 
 import android.animation.Animator;
 
+import com.gregmarut.commons.util.weak.WeakReferenceCleanup;
+
 public class WeakAnimatorCanceler extends WeakReferenceCleanup<Animator>
 {
 	@Override

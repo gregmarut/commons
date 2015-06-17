@@ -32,6 +32,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.gregmarut.commons</groupId>
+			<artifactId>util</artifactId>
+			<version>${version.this}</version>
+		</dependency>
+	
+		<dependency>
 			<groupId>com.google.android</groupId>
 			<artifactId>android</artifactId>
 			<version>4.1.1.4</version>

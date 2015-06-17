@@ -14,6 +14,8 @@ package com.gregmarut.android.commons.weak;
 
 import android.graphics.Bitmap;
 
+import com.gregmarut.commons.util.weak.WeakReferenceCleanup;
+
 public class WeakBitmapRecycler extends WeakReferenceCleanup<Bitmap>
 {
 	@Override

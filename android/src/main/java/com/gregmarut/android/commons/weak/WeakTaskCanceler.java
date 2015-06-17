@@ -14,6 +14,7 @@ package com.gregmarut.android.commons.weak;
 
 import com.gregmarut.android.commons.task.CallBackAsyncTask;
 import com.gregmarut.android.commons.task.TaskCallBackListener;
+import com.gregmarut.commons.util.weak.WeakReferenceCleanup;
 
 public class WeakTaskCanceler extends WeakReferenceCleanup<CallBackAsyncTask<?, ?>>
 {

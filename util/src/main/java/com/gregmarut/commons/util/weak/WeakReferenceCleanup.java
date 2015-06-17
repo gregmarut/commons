@@ -10,7 +10,7 @@
  *     Greg Marut - initial API and implementation
  * </pre>
  ******************************************************************************/
-package com.gregmarut.android.commons.weak;
+package com.gregmarut.commons.util.weak;
 
 import java.util.ArrayList;
 import java.util.List;
