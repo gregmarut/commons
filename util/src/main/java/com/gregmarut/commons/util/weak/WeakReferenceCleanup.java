@@ -52,8 +52,11 @@ public abstract class WeakReferenceCleanup<T>
 	 * 
 	 * @return the number of objects that were cleaned up
 	 */
-	public final int cleanUp()
+	public final synchronized int cleanUp()
 	{
+		// holds the list of objects to remove
+		List<EquatableWeakReference<T>> weakObjectsToRemove = new ArrayList<EquatableWeakReference<T>>();
+		
 		// holds the number of objects that were cleaned up
 		int count = 0;
 		
@@ -73,7 +76,19 @@ public abstract class WeakReferenceCleanup<T>
 					cleanUp(object);
 					count++;
 				}
+				else
+				{
+					// need to remove this from the list
+					weakObjectsToRemove.add(weakObject);
+				}
 			}
+		}
+		
+		// check to see if there are objects to remove
+		if (!weakObjectsToRemove.isEmpty())
+		{
+			// remove these objects from the list
+			weakObjects.removeAll(weakObjectsToRemove);
 		}
 		
 		return count;
