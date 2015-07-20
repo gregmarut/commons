@@ -25,6 +25,27 @@ public class ListUtil
 	}
 	
 	/**
+	 * Flattens a list of lists into 1 list
+	 * 
+	 * @param listOfLists
+	 * @return
+	 */
+	public static <T> List<T> flatten(final List<List<T>> listOfLists)
+	{
+		// holds the flattened list to return
+		List<T> flattenedList = new ArrayList<T>();
+		
+		// for each of the lists
+		for (List<T> list : listOfLists)
+		{
+			// add all from the list to the flattened list
+			flattenedList.addAll(list);
+		}
+		
+		return flattenedList;
+	}
+	
+	/**
 	 * Converts a list from one type of object to another
 	 * 
 	 * @param source
