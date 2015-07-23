@@ -7,6 +7,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,6 +80,9 @@ public class ParallelListProcessor<P, V>
 			listener.preExecute(total);
 		}
 		
+		// holds the atomic integer that will be used to increment for when a task is completed
+		final AtomicInteger completed = new AtomicInteger();
+		
 		// for each item in the list
 		for (final P p : list)
 		{
@@ -89,7 +93,22 @@ public class ParallelListProcessor<P, V>
 				@Override
 				public V call() throws Exception
 				{
-					return task.execute(p);
+					try
+					{
+						return task.execute(p);
+					}
+					finally
+					{
+						// increment the counter
+						int value = completed.getAndIncrement();
+						
+						// for each of the task callback listeners
+						for (TaskCallbackListener listener : listeners)
+						{
+							// notify the listener of the number of tasks that have been processed
+							listener.processed(value, total);
+						}
+					}
 				}
 			});
 			
@@ -115,15 +134,6 @@ public class ParallelListProcessor<P, V>
 			catch (ExecutionException e)
 			{
 				logger.error(e.getMessage(), e);
-			}
-			finally
-			{
-				// for each of the task callback listeners
-				for (TaskCallbackListener listener : listeners)
-				{
-					// notify the listener of the number of tasks that have been processed
-					listener.processed(i, total);
-				}
 			}
 		}
 		
