@@ -19,8 +19,8 @@ import com.gregmarut.android.commons.ui.BitmapLoader;
 public abstract class LoadRoundedBitmapImageTask<Params> extends LoadBitmapImageTask<Params>
 {
 	// holds the color of the border
-	private final int borderColor;
-	private final int borderSize;
+	protected final int borderColor;
+	protected final int borderSize;
 	
 	public LoadRoundedBitmapImageTask(final BitmapLoader bitmapLoader, final int imageSize, final int borderColor,
 		final int borderSize)
