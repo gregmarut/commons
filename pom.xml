@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.gregmarut.commons</groupId>
 	<artifactId>commons</artifactId>
-	<version>0.2-RELEASE</version>
+	<version>0.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>commons</name>
 	<description>A collection of commonly used code</description>
@@ -39,7 +39,7 @@
 	</modules>
 
 	<properties>
-		<version.this>0.2-RELEASE</version.this>
+		<version.this>0.3-SNAPSHOT</version.this>
 
 		<version.slf4j>1.7.7</version.slf4j>
 		<version.junit>4.4</version.junit>
