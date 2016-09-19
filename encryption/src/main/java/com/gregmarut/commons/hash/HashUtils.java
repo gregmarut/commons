@@ -9,6 +9,7 @@ public class HashUtils
 {
 	public static final String MD5 = "MD5";
 	public static final String SHA_1 = "SHA-1";
+	public static final String SHA_256 = "SHA-256";
 	
 	public static String md5(final String input)
 	{
@@ -18,6 +19,11 @@ public class HashUtils
 	public static String sha1(final String input)
 	{
 		return hash(input.getBytes(), SHA_1);
+	}
+	
+	public static String sha256(final String input)
+	{
+		return hash(input.getBytes(), SHA_256);
 	}
 	
 	private static String hash(final byte[] input, final String algorithm)
