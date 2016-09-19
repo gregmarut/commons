@@ -60,6 +60,24 @@ public class ByteArray
 	}
 	
 	/**
+	 * The constructor for ByteArray using a long value
+	 *
+	 * @param value
+	 */
+	public ByteArray(final long value)
+	{
+		// create the array
+		this.bytes = new byte[8];
+		
+		// for every byte
+		for (int i = 0; i < 8; i++)
+		{
+			// assign the array of bytes
+			this.bytes[i] = (byte) (value >> ((7 - i) * 8));
+		}
+	}
+	
+	/**
 	 * Appends a byte to the end of this byte array
 	 * 
 	 * @param byte
