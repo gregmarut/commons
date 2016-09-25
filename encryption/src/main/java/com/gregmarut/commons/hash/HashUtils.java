@@ -1,9 +1,9 @@
 package com.gregmarut.commons.hash;
 
+import com.gregmarut.commons.util.ByteArray;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-
-import com.gregmarut.commons.util.ByteArray;
 
 public class HashUtils
 {
@@ -13,20 +13,41 @@ public class HashUtils
 	
 	public static String md5(final String input)
 	{
-		return hash(input.getBytes(), MD5);
+		return hashString(input.getBytes(), MD5);
+	}
+	
+	public static byte[] md5(final byte[] input)
+	{
+		return hashBytes(input, MD5);
 	}
 	
 	public static String sha1(final String input)
 	{
-		return hash(input.getBytes(), SHA_1);
+		return hashString(input.getBytes(), SHA_1);
+	}
+	
+	public static byte[] sha1(final byte[] input)
+	{
+		return hashBytes(input, SHA_1);
 	}
 	
 	public static String sha256(final String input)
 	{
-		return hash(input.getBytes(), SHA_256);
+		return hashString(input.getBytes(), SHA_256);
 	}
 	
-	private static String hash(final byte[] input, final String algorithm)
+	public static byte[] sha256(final byte[] input)
+	{
+		return hashBytes(input, SHA_256);
+	}
+	
+	private static String hashString(final byte[] input, final String algorithm)
+	{
+		// return the byte array
+		return new ByteArray(hashBytes(input, algorithm)).toHexString();
+	}
+	
+	private static byte[] hashBytes(final byte[] input, final String algorithm)
 	{
 		// create the message digest object
 		MessageDigest mdMD5;
@@ -51,6 +72,6 @@ public class HashUtils
 		}
 		
 		// return the byte array
-		return new ByteArray(bytes).toHexString();
+		return bytes;
 	}
 }

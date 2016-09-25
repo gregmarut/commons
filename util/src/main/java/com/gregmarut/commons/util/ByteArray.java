@@ -5,7 +5,7 @@
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- * 
+ *
  * Contributors:
  *     Greg Marut - initial API and implementation
  * </pre>
@@ -36,7 +36,7 @@ public class ByteArray
 	
 	/**
 	 * Constructs a ByteArray with a default size
-	 * 
+	 *
 	 * @param length
 	 */
 	public ByteArray(final int length)
@@ -50,13 +50,34 @@ public class ByteArray
 	
 	/**
 	 * Constructs a ByteArray with content
-	 * 
+	 *
 	 * @param bytes
 	 */
 	public ByteArray(final byte[] bytes)
 	{
 		// save the byte array
 		this.bytes = bytes;
+	}
+	
+	/**
+	 * The constructor for ByteArray
+	 *
+	 * @param bytes
+	 * @param length
+	 */
+	public ByteArray(final byte[] bytes, int length)
+	{
+		// call the other constructor
+		this(length);
+		
+		// determine the smaller value
+		int smaller = Math.min(bytes.length, length);
+		
+		// for every byte
+		for (int i = 0; i < smaller; i++)
+		{
+			this.bytes[i] = bytes[i];
+		}
 	}
 	
 	/**
@@ -79,20 +100,20 @@ public class ByteArray
 	
 	/**
 	 * Appends a byte to the end of this byte array
-	 * 
+	 *
 	 * @param byte
 	 */
 	public void append(byte b)
 	{
 		append(new byte[]
-		{
-			b
-		});
+			{
+				b
+			});
 	}
 	
 	/**
 	 * Appends an array of bytes to the end of this byte array
-	 * 
+	 *
 	 * @param bytes
 	 */
 	public void append(byte[] bytes)
@@ -106,7 +127,7 @@ public class ByteArray
 	
 	/**
 	 * Appends a boolean to the byte array
-	 * 
+	 *
 	 * @param bool
 	 */
 	public void append(boolean bool)
@@ -120,7 +141,7 @@ public class ByteArray
 	
 	/**
 	 * Combines two byte arrays
-	 * 
+	 *
 	 * @param bytesToAppend
 	 * @return
 	 */
@@ -147,7 +168,7 @@ public class ByteArray
 	
 	/**
 	 * Copies a byte array with a specified length
-	 * 
+	 *
 	 * @return
 	 */
 	public ByteArray copy()
@@ -157,7 +178,7 @@ public class ByteArray
 	
 	/**
 	 * Copies a byte array with a specified length
-	 * 
+	 *
 	 * @param length
 	 * @return
 	 */
@@ -183,7 +204,7 @@ public class ByteArray
 	
 	/**
 	 * Extracts a sub array from a byte array
-	 * 
+	 *
 	 * @param index
 	 * @param length
 	 * @return
@@ -225,7 +246,7 @@ public class ByteArray
 	
 	/**
 	 * Extracts a sub array from a byte array
-	 * 
+	 *
 	 * @param index
 	 * @return
 	 * @throws ArrayIndexOutOfBoundsException
@@ -238,7 +259,7 @@ public class ByteArray
 	
 	/**
 	 * Resizes the current byte array
-	 * 
+	 *
 	 * @param size
 	 */
 	public void resize(final int size)
@@ -261,7 +282,7 @@ public class ByteArray
 	
 	/**
 	 * Sets a value in the byte array at a specified index
-	 * 
+	 *
 	 * @param index
 	 * @param b
 	 * @throws ArrayIndexOutOfBoundsException
@@ -273,7 +294,7 @@ public class ByteArray
 	
 	/**
 	 * Returns a byte at a specified location
-	 * 
+	 *
 	 * @param index
 	 * @return
 	 * @throws ArrayIndexOutOfBoundsException
@@ -285,7 +306,7 @@ public class ByteArray
 	
 	/**
 	 * Sets a value in the byte array at a specified index
-	 * 
+	 *
 	 * @param index
 	 * @param value
 	 * @throws ArrayIndexOutOfBoundsException
@@ -297,7 +318,7 @@ public class ByteArray
 	
 	/**
 	 * Returns a bit at a specified location
-	 * 
+	 *
 	 * @param index
 	 * @return
 	 * @throws ArrayIndexOutOfBoundsException
@@ -309,7 +330,7 @@ public class ByteArray
 	
 	/**
 	 * Returns a char at a specified location
-	 * 
+	 *
 	 * @param index
 	 * @return
 	 * @throws ArrayIndexOutOfBoundsException
@@ -329,7 +350,7 @@ public class ByteArray
 	
 	/**
 	 * Returns an int at a specified location
-	 * 
+	 *
 	 * @param index
 	 * @return
 	 * @throws ArrayIndexOutOfBoundsException
@@ -341,7 +362,7 @@ public class ByteArray
 	
 	/**
 	 * Returns the array of bytes
-	 * 
+	 *
 	 * @return
 	 */
 	public byte[] getBytes()
@@ -351,7 +372,7 @@ public class ByteArray
 	
 	/**
 	 * Returns the size of the byte array
-	 * 
+	 *
 	 * @return
 	 */
 	public int getSize()
@@ -370,7 +391,7 @@ public class ByteArray
 	
 	/**
 	 * Returns the byte array as a hex string
-	 * 
+	 *
 	 * @return
 	 */
 	public String toHexString()
@@ -401,8 +422,35 @@ public class ByteArray
 	}
 	
 	/**
+	 * Extracts a string from the bytes ignoring '0' bits
+	 *
+	 * @return
+	 */
+	public String extractString()
+	{
+		// holds the string builder object to return
+		StringBuilder sb = new StringBuilder();
+		
+		// for every byte
+		for (int i = 0; i < bytes.length; i++)
+		{
+			// extract the current character
+			char current = (char) (bytes[i] & 0xFF);
+			
+			// append the character
+			if (current > 0)
+			{
+				sb.append(current);
+			}
+		}
+		
+		// return the string
+		return sb.toString();
+	}
+	
+	/**
 	 * Converts a byte array to an int value
-	 * 
+	 *
 	 * @return
 	 */
 	public int toInt()
@@ -412,7 +460,7 @@ public class ByteArray
 	
 	/**
 	 * Converts a byte array to a long value
-	 * 
+	 *
 	 * @return
 	 */
 	public long toLong()
@@ -444,7 +492,7 @@ public class ByteArray
 	
 	/**
 	 * Converts a byte to a long
-	 * 
+	 *
 	 * @param b
 	 * @return
 	 */
@@ -455,7 +503,7 @@ public class ByteArray
 	
 	/**
 	 * Override the equals
-	 * 
+	 *
 	 * @param object
 	 */
 	@Override
