@@ -9,6 +9,11 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A utility class that assists in finding and replacing of strings for multiple values. Multiple strings will be returned for each combinations of values.
+ *
+ * @author Greg Marut
+ */
 public class MultiReplaceUtil
 {
 	/**
