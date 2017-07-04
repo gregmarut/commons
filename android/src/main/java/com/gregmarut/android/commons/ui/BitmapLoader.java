@@ -5,7 +5,7 @@
  * are made available under the terms of the GNU Public License v3.0
  * which accompanies this distribution, and is available at
  * http://www.gnu.org/licenses/gpl.html
- * 
+ *
  * Contributors:
  *     Greg Marut - initial API and implementation
  * </pre>
@@ -29,10 +29,10 @@ import com.gregmarut.android.commons.weak.WeakBitmapRecycler;
 /**
  * One class that is responsible for loading and tracking (with weak references) bitmaps. This
  * allows for all created bitmaps to be easily destroyed by calling {@link destroy()}.
- * <p />
+ * <p/>
  * Due to the fact that bitmaps are very resource hungry and mobile devices may not have much memory
  * to spare, this class helps manage and clean up bitmaps to prevent memory leaks.
- * 
+ *
  * @author Greg Marut
  */
 public class BitmapLoader
@@ -169,10 +169,10 @@ public class BitmapLoader
 	
 	/**
 	 * Crops the original bitmap into a round one
-	 * 
-	 * @param data
-	 * @param requiredWidth
-	 * @param requiredHeight
+	 *
+	 * @param bitmap
+	 * @param borderColor
+	 * @param borderSize
 	 * @return
 	 */
 	public Bitmap cropRoundBitmap(final Bitmap bitmap, final int borderColor, final int borderSize)
@@ -182,7 +182,7 @@ public class BitmapLoader
 	
 	/**
 	 * Crops the original bitmap into a round one
-	 * 
+	 *
 	 * @param bitmap
 	 * @param recycleOriginal
 	 * @return
@@ -223,6 +223,49 @@ public class BitmapLoader
 		bitmapPaint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
 		canvas.drawBitmap(bitmap, rect, rect, bitmapPaint);
 		canvas.drawOval(rectF, borderPaint);
+		
+		// check to see if the original bitmap should be immediately recycled
+		if (recycleOriginal)
+		{
+			bitmap.recycle();
+		}
+		
+		// add this bitmap to the list to keep track of it
+		weakBitmapRecycler.add(targetBitmap);
+		
+		return targetBitmap;
+	}
+	
+	/**
+	 * Crops the original bitmap into a round one
+	 *
+	 * @param bitmap
+	 * @param recycleOriginal
+	 * @return
+	 */
+	public Bitmap cropRoundedCornersBitmap(final Bitmap bitmap, final int roundCornerPixels,
+		final boolean recycleOriginal)
+	{
+		// create a target bitmap to draw the circular image to
+		Bitmap targetBitmap = Bitmap.createBitmap(bitmap.getWidth(),
+			bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+		
+		// create the canvas that will restrict the image to an ellipse
+		Canvas canvas = new Canvas(targetBitmap);
+		
+		// set up the paint for copying over the bitmap
+		final Paint paint = new Paint();
+		paint.setAntiAlias(true);
+		
+		// create the rect bounds of the original bitmap
+		final Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
+		final RectF rectF = new RectF(rect);
+		
+		canvas.drawARGB(0, 0, 0, 0);
+		canvas.drawRoundRect(rectF, roundCornerPixels, roundCornerPixels, paint);
+		
+		paint.setXfermode(new PorterDuffXfermode(Mode.SRC_IN));
+		canvas.drawBitmap(bitmap, rect, rect, paint);
 		
 		// check to see if the original bitmap should be immediately recycled
 		if (recycleOriginal)
