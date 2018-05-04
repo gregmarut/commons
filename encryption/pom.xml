@@ -34,7 +34,7 @@
 		<dependency>
 			<groupId>com.gregmarut.commons</groupId>
 			<artifactId>util</artifactId>
-			<version>${version.this}</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

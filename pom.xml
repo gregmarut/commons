@@ -39,8 +39,6 @@
 	</modules>
 
 	<properties>
-		<version.this>0.3-SNAPSHOT</version.this>
-
 		<version.slf4j>1.7.7</version.slf4j>
 		<version.junit>4.4</version.junit>
 		<version.commons-io>2.4</version.commons-io>
