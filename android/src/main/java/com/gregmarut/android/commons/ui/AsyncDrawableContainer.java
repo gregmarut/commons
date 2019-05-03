@@ -14,15 +14,17 @@ package com.gregmarut.android.commons.ui;
 
 import android.graphics.drawable.Drawable;
 
+import java.io.Serializable;
+
 /**
  * Defines that a class is able to be used as a container for asynchronous loading calls for loading
  * images
  * 
  * @author Greg
  */
-public abstract class AsyncDrawableContainer<ID, Entity>
+public abstract class AsyncDrawableContainer<ID, Entity> implements Serializable
 {
-	private Drawable drawable;
+	private transient Drawable drawable;
 	
 	public void setDrawable(Drawable drawable)
 	{
