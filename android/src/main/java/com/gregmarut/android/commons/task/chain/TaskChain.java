@@ -1,18 +1,19 @@
 package com.gregmarut.android.commons.task.chain;
 
+import android.os.AsyncTask;
+import android.util.Log;
+import com.gregmarut.android.commons.task.CallBackAsyncTask;
+import com.gregmarut.android.commons.task.TaskCallBackListener;
+import com.gregmarut.android.commons.task.progress.ProgressHandler;
+import com.gregmarut.android.commons.task.progress.TaskProgress;
+import com.gregmarut.android.commons.weak.WeakTaskCanceler;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
-import com.gregmarut.android.commons.task.CallBackAsyncTask;
-import com.gregmarut.android.commons.task.TaskCallBackListener;
-import com.gregmarut.android.commons.weak.WeakTaskCanceler;
-
 /**
  * Holds the task chain that will execute tasks in order and report when all have successfully finished
- * 
+ *
  * @author Greg
  */
 public class TaskChain implements TaskCallBackListener<Object>
@@ -28,6 +29,9 @@ public class TaskChain implements TaskCallBackListener<Object>
 	// determines if this task chain is paused or canceled
 	private volatile boolean paused;
 	private volatile boolean cancelled;
+	
+	private ProgressHandler progressHandler;
+	private int totalTasks;
 	
 	public TaskChain(final TaskChainListener taskChainListener)
 	{
@@ -48,10 +52,13 @@ public class TaskChain implements TaskCallBackListener<Object>
 	
 	/**
 	 * Adds a task to the task chain
-	 * 
+	 *
 	 * @param task
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings(
+		{
+			"rawtypes", "unchecked"
+		})
 	public void addTask(CallBackAsyncTask<Void, ?> task)
 	{
 		task.addTaskCallBackListener((TaskCallBackListener) this);
@@ -72,10 +79,22 @@ public class TaskChain implements TaskCallBackListener<Object>
 		executeNextTask();
 	}
 	
+	public void start()
+	{
+		totalTasks = taskQueue.size();
+		
+		if (null != progressHandler)
+		{
+			progressHandler.begin(null);
+		}
+		
+		executeNextTask();
+	}
+	
 	/**
 	 * Executes the next task in the queue asynchronously
 	 */
-	public void executeNextTask()
+	private void executeNextTask()
 	{
 		// make sure that the tasks are to be canceled
 		if (!cancelled)
@@ -83,6 +102,13 @@ public class TaskChain implements TaskCallBackListener<Object>
 			// make sure the chain is not paused
 			if (!paused)
 			{
+				if (null != progressHandler)
+				{
+					int currentTask = totalTasks - taskQueue.size() + 1;
+					TaskProgress taskProgress = new TaskProgress(currentTask, totalTasks);
+					progressHandler.update(null, taskProgress);
+				}
+				
 				// pull the next task from the chain
 				CallBackAsyncTask<Void, ?> task = taskQueue.poll();
 				
@@ -101,6 +127,12 @@ public class TaskChain implements TaskCallBackListener<Object>
 				{
 					// there are no more tasks to complete
 					taskChainListener.taskChainCompleted();
+					
+					if (null != progressHandler)
+					{
+						progressHandler.end();
+						progressHandler.destroy();
+					}
 				}
 			}
 		}
@@ -146,6 +178,22 @@ public class TaskChain implements TaskCallBackListener<Object>
 			weakTaskCanceler.cleanUp();
 			taskQueue.clear();
 			taskChainListener.taskChainCanceled();
+			
+			if (null != progressHandler)
+			{
+				progressHandler.end();
+				progressHandler.destroy();
+			}
 		}
+	}
+	
+	public ProgressHandler getProgressHandler()
+	{
+		return progressHandler;
+	}
+	
+	public void setProgressHandler(final ProgressHandler progressHandler)
+	{
+		this.progressHandler = progressHandler;
 	}
 }
